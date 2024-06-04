@@ -39,7 +39,7 @@ Widget customButton(
                 child: Text(
                   buttonText,
                   style:  TextStyle(
-                      color:txtColor ?? ColorResources.whiteColor,
+                      color:txtColor ?? ColorResources.blackColor,
                       fontWeight: FontWeight.w600,
                       fontSize: 16),
                 ),

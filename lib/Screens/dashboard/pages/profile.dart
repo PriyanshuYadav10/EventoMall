@@ -100,9 +100,6 @@ class _ProfileState extends State<Profile> {
                           ],
                         ),
                       ),
-                      Container(
-                        padding: const EdgeInsets.only(left: 5,top: 20),
-                          child: Image.asset(Images.multiCar)),
                     ],
                   ),
                 ),
@@ -119,10 +116,6 @@ class _ProfileState extends State<Profile> {
                 ),
               ],
             ),
-            // Container(
-            //     padding: const EdgeInsets.only(left: 15,right: 15),
-            //     alignment: Alignment.bottomCenter,
-            //     child: Image.asset(Images.multiCar)),
           ],
         ),
       );

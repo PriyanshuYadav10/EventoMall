@@ -37,9 +37,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   static final List<String> _titleName = [
     home,
-    buyCar,
-    message,
-    sellCar,
+    suppliers,
+    favourites,
+    planning,
     profile
   ];
 
@@ -64,6 +64,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   int selectedindex = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,15 +76,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
               : Provider.of<DashboardProvider>(context, listen: false)
                           .selectedPageIndex ==
                       1
-                  ? buyCar
+                  ? suppliers
                   : Provider.of<DashboardProvider>(context, listen: false)
                               .selectedPageIndex ==
                           2
-                      ? message
+                      ? favourites
                       : Provider.of<DashboardProvider>(context, listen: false)
                                   .selectedPageIndex ==
                               3
-                          ? sellCar
+                          ? planning
                           : profile),
           backgroundColor: ColorResources.whiteColor,
           leading: Builder(
@@ -106,9 +107,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 child: const Icon(Icons.notifications_none_rounded)),
             vSpace(15),
             InkWell(
-                onTap: () {
-
-                },
+                onTap: () {},
                 child: const Icon(Icons.favorite_outline_rounded)),
             vSpace(15),
             Visibility(
@@ -116,9 +115,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       .selectedPageIndex ==
                   3,
               child: InkWell(
-                  onTap: () {
-
-                  },
+                  onTap: () {},
                   child: Container(
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(50),
@@ -141,7 +138,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         drawer: SafeArea(
           child: Drawer(
             backgroundColor: ColorResources.whiteColor,
-            child:  MainDrawerWidget(),
+            child: MainDrawerWidget(),
           ),
         ),
         bottomNavigationBar: BottomNavigationBar(
@@ -149,6 +146,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           type: BottomNavigationBarType.fixed,
           items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
+          backgroundColor: ColorResources.appColor,
               icon: Image.asset(Images.home,
                   height: 24,
                   color: Provider.of<DashboardProvider>(context, listen: true)
@@ -159,7 +157,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
               label: _titleName[0],
             ),
             BottomNavigationBarItem(
-              icon: Image.asset(Images.car,
+          backgroundColor: ColorResources.appColor,
+              icon: Image.asset(Images.supplier,
                   height: 24,
                   color: Provider.of<DashboardProvider>(context, listen: true)
                               .selectedPageIndex ==
@@ -169,26 +168,33 @@ class _DashboardScreenState extends State<DashboardScreen> {
               label: _titleName[1],
             ),
             BottomNavigationBarItem(
-              icon: Image.asset(Images.chat,
-                  height: 24,
-                  color: Provider.of<DashboardProvider>(context, listen: true)
-                              .selectedPageIndex ==
-                          2
-                      ? ColorResources.blackColor
-                      : ColorResources.whiteColor),
+          backgroundColor: ColorResources.appColor,
+              icon: Icon(
+                Icons.favorite_outline_rounded,
+                color: Provider.of<DashboardProvider>(context, listen: true)
+                            .selectedPageIndex ==
+                        2
+                    ? ColorResources.blackColor
+                    : ColorResources.whiteColor,
+                size: 24,
+              ),
               label: _titleName[2],
             ),
             BottomNavigationBarItem(
-              icon: Image.asset(Images.key,
-                  height: 24,
-                  color: Provider.of<DashboardProvider>(context, listen: true)
-                              .selectedPageIndex ==
-                          3
-                      ? ColorResources.blackColor
-                      : ColorResources.whiteColor),
+          backgroundColor: ColorResources.appColor,
+              icon: Icon(
+                Icons.event_note_outlined,
+                color: Provider.of<DashboardProvider>(context, listen: true)
+                    .selectedPageIndex ==
+                    3
+                    ? ColorResources.blackColor
+                    : ColorResources.whiteColor,
+                size: 24,
+              ),
               label: _titleName[3],
             ),
             BottomNavigationBarItem(
+          backgroundColor: ColorResources.appColor,
               icon: Image.asset(Images.profile,
                   height: 24,
                   color: Provider.of<DashboardProvider>(context, listen: true)
@@ -210,7 +216,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ));
   }
 
-  Widget MainDrawerWidget(){
+  Widget MainDrawerWidget() {
     return Container(
       color: ColorResources.whiteColor,
       child: Column(
@@ -218,8 +224,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
           Container(
             width: MediaQuery.of(context).size.width,
             decoration: const BoxDecoration(
-              image: DecorationImage(image: AssetImage(Images.drawerImg),fit: BoxFit.fill)
-            ),
+                image: DecorationImage(
+                    image: AssetImage(Images.drawerImg), fit: BoxFit.fill)),
             child: Padding(
               padding: const EdgeInsets.fromLTRB(15, 30, 0, 15),
               child: Column(
@@ -228,7 +234,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       InkWell(
-                        onTap: (){
+                        onTap: () {
                           Navigator.of(context).pop();
                           Provider.of<DashboardProvider>(context, listen: false)
                               .updateIndex(4);
@@ -243,24 +249,36 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('Ealvina Kolvish',style: Styles.mediumTextStyle(color: ColorResources.whiteColor,size: 15)),
-                                Text('name123@gmail.com',style: Styles.regularTextStyle(size: 15,color:ColorResources.whiteColor.withOpacity(0.8)),),
+                                Text('Ealvina Kolvish',
+                                    style: Styles.mediumTextStyle(
+                                        color: ColorResources.whiteColor,
+                                        size: 15)),
+                                Text(
+                                  'name123@gmail.com',
+                                  style: Styles.regularTextStyle(
+                                      size: 15,
+                                      color: ColorResources.whiteColor
+                                          .withOpacity(0.8)),
+                                ),
                               ],
                             )
                           ],
                         ),
                       ),
                       InkWell(
-                        onTap: (){
+                        onTap: () {
                           Navigator.of(context).pop();
                         },
                         child: Container(
                           decoration: const BoxDecoration(
-                            color: ColorResources.whiteColor,
-                            borderRadius: BorderRadius.only(topLeft: Radius.circular(15),bottomLeft: Radius.circular(15))
-                          ),
-                          padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 6),
-                          child:  const Icon(Icons.close_rounded,color: ColorResources.appColor),
+                              color: ColorResources.whiteColor,
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(15),
+                                  bottomLeft: Radius.circular(15))),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 6),
+                          child: const Icon(Icons.close_rounded,
+                              color: ColorResources.appColor),
                         ),
                       )
                     ],
@@ -268,90 +286,93 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   hSpace(20),
                   const Padding(
                     padding: EdgeInsets.only(right: 15),
-                    child: Divider(color: ColorResources.whiteColor,height: 1),
+                    child: Divider(color: ColorResources.whiteColor, height: 1),
                   ),
                   hSpace(30),
                   Padding(
-                    padding: const EdgeInsets.only(right: 15,bottom: 40),
+                    padding: const EdgeInsets.only(right: 15, bottom: 40),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         Column(
                           children: [
                             InkWell(
-                              onTap: (){
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: ColorResources.whiteColor,
-                                  borderRadius: BorderRadius.circular(15)
-                                ),
-                                padding: const EdgeInsets.all(15),
-                                child: Image.asset(Images.bookmark,color: ColorResources.blackColor,height: 25,),
-                              ),
-                            ),
-                            hSpace(5),
-                            Text(placeAnAd,style: Styles.mediumTextStyle(size: 12,color: ColorResources.whiteColor))
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            InkWell(
-                              onTap: (){
+                              onTap: () {
                                 Navigator.of(context).pop();
-                                Provider.of<DashboardProvider>(context, listen: false)
+                                Provider.of<DashboardProvider>(context,
+                                        listen: false)
                                     .updateIndex(1);
                               },
                               child: Container(
                                 decoration: BoxDecoration(
-                                  color: ColorResources.whiteColor,
-                                  borderRadius: BorderRadius.circular(15)
-                                ),
+                                    color: ColorResources.whiteColor,
+                                    borderRadius: BorderRadius.circular(15)),
                                 padding: const EdgeInsets.all(15),
-                                child: Image.asset(Images.car,color: ColorResources.blackColor,height: 25,),
+                                child: Image.asset(
+                                  Images.supplier,
+                                  color: ColorResources.blackColor,
+                                  height: 25,
+                                ),
                               ),
                             ),
                             hSpace(5),
-                            Text(buyCar,style: Styles.mediumTextStyle(size: 12,color: ColorResources.whiteColor))
+                            Text(suppliers,
+                                style: Styles.mediumTextStyle(
+                                    size: 12, color: ColorResources.whiteColor))
                           ],
                         ),
                         Column(
                           children: [
                             InkWell(
-                              onTap: (){
-                              Navigator.of(context).pop();
-                              Provider.of<DashboardProvider>(context, listen: false)
-                                  .updateIndex(3);
-                            },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: ColorResources.whiteColor,
-                                  borderRadius: BorderRadius.circular(15)
-                                ),
-                                padding: const EdgeInsets.all(15),
-                                child: Image.asset(Images.key,color: ColorResources.blackColor,height: 25,),
-                              ),
-                            ),
-                            hSpace(5),
-                            Text(sellCar,style: Styles.mediumTextStyle(size: 12,color: ColorResources.whiteColor))
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            InkWell(
-                              onTap: (){
+                              onTap: () {
+                                Navigator.of(context).pop();
+                                Provider.of<DashboardProvider>(context,
+                                        listen: false)
+                                    .updateIndex(3);
                               },
                               child: Container(
                                 decoration: BoxDecoration(
-                                  color: ColorResources.whiteColor,
-                                  borderRadius: BorderRadius.circular(15)
-                                ),
+                                    color: ColorResources.whiteColor,
+                                    borderRadius: BorderRadius.circular(15)),
                                 padding: const EdgeInsets.all(15),
-                                child:  Image.asset(Images.heart,color: ColorResources.blackColor,height: 25,),
+                                child: Image.asset(
+                                  Images.planning,
+                                  color: ColorResources.blackColor,
+                                  height: 25,
+                                ),
                               ),
                             ),
                             hSpace(5),
-                            Text(saved,style: Styles.mediumTextStyle(size: 12,color: ColorResources.whiteColor))
+                            Text(planning,
+                                style: Styles.mediumTextStyle(
+                                    size: 12, color: ColorResources.whiteColor))
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                Navigator.of(context).pop();
+                                Provider.of<DashboardProvider>(context,
+                                    listen: false)
+                                    .updateIndex(2);
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    color: ColorResources.whiteColor,
+                                    borderRadius: BorderRadius.circular(15)),
+                                padding: const EdgeInsets.all(15),
+                                child: Image.asset(
+                                  Images.heart,
+                                  color: ColorResources.blackColor,
+                                  height: 25,
+                                ),
+                              ),
+                            ),
+                            hSpace(5),
+                            Text(saved,
+                                style: Styles.mediumTextStyle(
+                                    size: 12, color: ColorResources.whiteColor))
                           ],
                         ),
                       ],
@@ -369,39 +390,46 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 setState(() {
                   selectedindex = i;
                 });
-                if(selectedindex == 0){
-
-                }else if(selectedindex == 1){
+                if (selectedindex == 0) {
+                } else if (selectedindex == 1) {
                   Provider.of<DashboardProvider>(context, listen: false)
                       .updateIndex(2);
-                }else if(selectedindex == 3){
-                }else if(selectedindex == 4){
-                }else if(selectedindex == 5){
-                  Navigator.of(context).push(CupertinoPageRoute(builder: (context)=>const Membership()));
-                }else if(selectedindex == 6){
+                } else if (selectedindex == 3) {
+                } else if (selectedindex == 4) {
+                } else if (selectedindex == 5) {
+                  Navigator.of(context).push(CupertinoPageRoute(
+                      builder: (context) => const Membership()));
+                } else if (selectedindex == 6) {
                   Provider.of<DashboardProvider>(context, listen: false)
                       .updateIndex(4);
                 }
               },
               child: Container(
                 decoration: BoxDecoration(
-                    color: selectedindex == i?ColorResources.appColor:Colors.transparent,
+                    color: selectedindex == i
+                        ? ColorResources.appColor
+                        : Colors.transparent,
                     borderRadius: BorderRadius.circular(50)),
                 margin: const EdgeInsets.fromLTRB(10, 3, 10, 0),
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 15, vertical: 8),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
                 child: Row(
                   children: [
                     Image(
                       image: sideMenu[i].image,
                       height: 25,
-                      color:selectedindex == i ? ColorResources.whiteColor:ColorResources.blackColor,
+                      color: selectedindex == i
+                          ? ColorResources.whiteColor
+                          : ColorResources.blackColor,
                     ),
                     vSpace(10),
                     Text(
                       sideMenu[i].title,
                       style: Styles.mediumTextStyle(
-                          color: selectedindex == i ? ColorResources.whiteColor:ColorResources.blackColor, size: 15),
+                          color: selectedindex == i
+                              ? ColorResources.whiteColor
+                              : ColorResources.blackColor,
+                          size: 15),
                     )
                   ],
                 ),
@@ -414,21 +442,19 @@ class _DashboardScreenState extends State<DashboardScreen> {
             child: Column(
               children: [
                 const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 15,vertical: 5),
-                  child: Divider(color:ColorResources.blackColor,thickness:0.5),
+                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                  child:
+                      Divider(color: ColorResources.blackColor, thickness: 0.5),
                 ),
                 hSpace(10),
                 InkWell(
-                  splashColor:
-                  ColorResources.appColor.withOpacity(0.5),
-                  onTap: () {
-                    
-                  },
+                  splashColor: ColorResources.appColor.withOpacity(0.5),
+                  onTap: () {},
                   child: Row(
                     children: [
                       vSpace(15),
                       const Image(
-                        image:  AssetImage(Images.logout),
+                        image: AssetImage(Images.logout),
                         height: 25,
                         color: ColorResources.blackColor,
                       ),
@@ -436,8 +462,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       Text(
                         "Logout",
                         style: Styles.mediumTextStyle(
-                            color: ColorResources.blackColor,
-                            size: 16),
+                            color: ColorResources.blackColor, size: 16),
                       )
                     ],
                   ),

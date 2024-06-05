@@ -41,6 +41,8 @@ class Images {
   static const String logout = 'assets/images/logout.png';
   static const String membership = 'assets/images/membership.png';
   static const String membershipBg = 'assets/images/membershipBg.png';
+  static const String planning = 'assets/images/planning.png';
+  static const String supplier = 'assets/images/supplier.png';
 
 
 }

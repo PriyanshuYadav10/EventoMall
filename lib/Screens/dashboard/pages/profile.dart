@@ -78,7 +78,7 @@ class _ProfileState extends State<Profile> {
                             ),
                             hSpace(12),
                             Text(phoneNumber, style: Styles.mediumTextStyle(
-                                color: ColorResources.whiteColor, size: 17)),
+                                color: ColorResources.whiteColor, size  : 17)),
                             hSpace(8),
                             Text('+91 123 456 7890',
                                 style: Styles.regularTextStyle(

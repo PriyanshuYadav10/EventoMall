@@ -42,7 +42,7 @@ commonAppBar(title,context, {Color? color}) {
 
 List<DashboardModel> sideMenu = [
   DashboardModel(image: const AssetImage(Images.carValue), title: carValuation, id: 1),
-  DashboardModel(image: const AssetImage(Images.chat), title: message, id: 2),
+  DashboardModel(image: const AssetImage(Images.chat), title: favourites, id: 2),
   DashboardModel(image: const AssetImage(Images.category), title: category, id: 3),
   DashboardModel(image: const AssetImage(Images.addCar), title: addCar, id: 4),
   DashboardModel(image: const AssetImage(Images.bookmark), title: manageAd, id: 5),
@@ -145,7 +145,7 @@ Future<void> pickImages(BuildContext context,path) async {
   final ImagePicker _picker = ImagePicker();
   final List<XFile> pickedFiles = await _picker.pickMultiImage();
   if (pickedFiles != null) {
-    if(path == sellCar) {
+    if(path == planning) {
       // final selectedImagesProvider =
       // Provider.of<SellCarProvider>(context, listen: false);
       // // selectedImagesProvider.addImage(pickedFiles.first); // Add the first image for demo (adjust as needed)
@@ -153,7 +153,7 @@ Future<void> pickImages(BuildContext context,path) async {
       //   selectedImagesProvider.addImage(image);
       // }
     }
-    if(path == sellCar) {
+    if(path == planning) {
       // final selectedImagesProvider =
       // Provider.of<SellCarProvider>(context, listen: false);
       // selectedImagesProvider.clearImages();
